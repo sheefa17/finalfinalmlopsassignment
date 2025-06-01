@@ -15,12 +15,12 @@ jobs:
 
       - name: Install dependencies and run tests
         run: |
-          python3.12 -m pip install --upgrade pip
-          python3.12 -m pip install Flask scikit-learn pandas numpy pytest joblib
-          python3.12 -m pytest
+          python3.9 -m pip install --upgrade pip
+          python3.9 -m pip install Flask scikit-learn pandas numpy joblib pytest
+          python3.9 -m pytest
 
       - name: Build Docker image
-        run: docker build -t prajwalkrish/mlops-health-risk-api:latest .
+        run: docker build -t sheefa17/mlops-health-risk-api:latest .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -29,11 +29,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Docker image to Docker Hub
-        run: docker push prajwalkrish/mlops-health-risk-api:latest
+        run: docker push sheefa17/mlops-health-risk-api:latest
 
       - name: Set up KUBECONFIG for Minikube
         run: |
-          sudo chown -R prajwalachar666:prajwalachar666 $HOME/.kube
+          sudo chown -R sheefa.naaz1:sheefa.naaz1 $HOME/.kube
 
       - name: Debug - list files
         run: |
