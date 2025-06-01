@@ -33,7 +33,7 @@ jobs:
 
       - name: Set up KUBECONFIG for Minikube
         run: |
-          sudo chown -R sheefa.naaz1:sheefa.naaz1 $HOME/.kube
+          sudo chown -R sheefa_naaz1:sheefa_naaz1 $HOME/.kube
 
       - name: Debug - list files
         run: |
