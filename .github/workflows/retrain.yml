@@ -1,0 +1,31 @@
+name: Retrain Model
+
+on:
+  workflow_dispatch:  # manually trigger retraining from GitHub Actions tab
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install Flask scikit-learn pandas numpy pytest joblib
+
+      - name: Retrain Model
+        run: |
+          python src/train.py
+
+      - name: Upload trained model as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model
+          path: src/model.pkl

@@ -1,0 +1,48 @@
+name: Deploy to GCP VM via Kubernetes
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy via Kubernetes
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies and run tests
+        run: |
+          python3.12 -m pip install --upgrade pip
+          python3.12 -m pip install Flask scikit-learn pandas numpy pytest joblib
+          python3.12 -m pytest
+
+      - name: Build Docker image
+        run: docker build -t prajwalkrish/mlops-health-risk-api:latest .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker image to Docker Hub
+        run: docker push prajwalkrish/mlops-health-risk-api:latest
+
+      - name: Set up KUBECONFIG for Minikube
+        run: |
+          sudo chown -R prajwalachar666:prajwalachar666 $HOME/.kube
+
+      - name: Debug - list files
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -la
+          echo "k8s directory contents:"
+          ls -la k8s
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/deployment.yml
+          kubectl apply -f k8s/service.yml

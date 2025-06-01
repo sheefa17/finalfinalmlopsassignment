@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Risk Classifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #f2f2f2;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Health Risk Classifier</h2>
+    <form method="POST" action="/predict">
+
+        <label for="age">Age:</label><br>
+        <input type="number" name="age" required><br>
+
+        <label for="cholesterol">Cholesterol Level (mg/dL):</label><br>
+        <input type="number" name="cholesterol" required><br>
+
+        <button type="submit">Predict Risk</button>
+    </form>
+</body>
+</html>
+

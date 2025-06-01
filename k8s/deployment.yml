@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-risk-app
+  labels:
+    app: health-risk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: health-risk
+  template:
+    metadata:
+      labels:
+        app: health-risk
+    spec:
+      containers:
+      - name: health-risk-container
+        image: prajwalkrish/mlops-health-risk-api:latest
+        ports:
+        - containerPort: 5000
+
